@@ -1,0 +1,21 @@
+.search {
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    &__icon {
+        position: absolute;
+        top: 6px;
+        left: 16px;
+        width: 24px;
+        height: 24px;
+    }
+
+    &__input {
+        padding: 12px 16px 12px 52px;
+        background-color: #393B3C;
+        border-radius: 8px;
+        border: none;
+        width: 100%;
+    }
+}
