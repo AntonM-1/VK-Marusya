@@ -1,0 +1,63 @@
+.hero-banner {
+    padding: 32px 0;
+
+    &__wrap {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        justify-items: end;
+        gap: 20px;
+    }
+
+    &__left-side {
+        display: grid;
+        gap: 60px;
+    }
+
+    &__about-film {
+        display: grid;
+        gap: 16px;
+    }
+
+    &__info {
+        display: flex;
+        gap: 16px;
+        color: $color-white-70;
+        font-size: 18px;
+        line-height: 24px;
+        align-items: center;
+    }
+
+    &__rating {
+        display: flex;
+        gap: 4px;
+        color: $color-white;
+        background-color: $color-green;
+        border-radius: 16px;
+        padding: 4px 12px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__text {
+        display: grid;
+        gap: 16px;
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 56px;
+    }
+
+    &__description {
+        font-size: 24px;
+        line-height: 32px;
+        color: $color-white-70;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+    }
+}

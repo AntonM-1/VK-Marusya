@@ -4,6 +4,8 @@
 $color-black:           #000000;
 $color-black-20:        rgba(0, 0, 0, 0.20);
 $color-black-50:        rgba(0, 0, 0, 0.50);
+$color-black-40:        rgba(0, 0, 0, 0.40);
+$color-black-70:        rgba(39, 36, 36, 0.7);
 $color-dark-bg:         #0A0B0B;
 $color-dark-bg-50:      rgba(10, 11, 11, 0.50);
 $color-dark-bg-90:      rgba(10, 11, 11, 0.90);
@@ -11,6 +13,7 @@ $color-dark-bg-90:      rgba(10, 11, 11, 0.90);
 $color-white:           #FFFFFF;
 $color-white-25:        rgba(255, 255, 255, 0.25);
 $color-white-50:        rgba(255, 255, 255, 0.50);
+$color-white-70:        rgba(255, 255, 255, 0.70);
 $color-white-80:        rgba(255, 255, 255, 0.80);
 
 // Gray scale
@@ -25,9 +28,12 @@ $color-gray-light:      #F5F6F8;
 
 // Accent
 $color-blue:            #1381E8;
+$color-slate-blue:      #6a5dc2;
 $color-blue-light:      #67A5EB;
+$color-blue-90:         rgba(39, 135, 245, 0.90);
 $color-purple:          #9747FF;
 $color-purple-light:    #DC5DFC;
+$color-purple-90:       rgba(163, 147, 245, 0.90);
 $color-green:           #308E21;
 $color-yellow:          #A59400;
 $color-red:             #C82020;
