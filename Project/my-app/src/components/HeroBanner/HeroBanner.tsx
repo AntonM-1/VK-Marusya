@@ -40,7 +40,7 @@ const HeroBanner = () => {
                         </div>
                     </div>
                     <div className={styles['hero-banner__right-side']}>
-                        <img src={ImgPrev} alt="Изображение" />
+                        <img src={ImgPrev} alt="Изображение" className={styles['hero-banner__img']} />
                     </div>
                 </div>
             </div>

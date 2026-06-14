@@ -2,7 +2,7 @@
     padding: 40px 0;
 
     @include mobile {
-        padding: 14px 0 24px;
+        padding: 0 0 24px;
     }
 
     &__socials {
@@ -14,5 +14,11 @@
         @include mobile {
             justify-content: start;
         }
+    }
+
+    &__link {
+        display: block;
+        width: 24px;
+        height: 24px;
     }
 }

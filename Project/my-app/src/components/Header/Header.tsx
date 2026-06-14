@@ -12,7 +12,7 @@ const Header = () => {
             <div className="container">
                 <div className={styles.header__wrap}>
                     <Link to='/' className={styles.header__logo}>
-                        <img src={Logo} alt="Логотип вк-маруся" className={styles['header__logo-img']} />
+                        <img src={Logo} alt="Логотип вк-маруся" className={styles['header__logo-img']} width='143' height='32'/>
                     </Link>
                     <div className={styles.header__center}>
                         <nav className={styles.header__nav}>

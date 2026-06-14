@@ -1,22 +1,29 @@
 .header {
+    padding: 25px 0;
+
+    @include mobile {
+        padding: 16px 0 8px;
+
+    }
+
     &__wrap {
-        display: flex;
+        display: grid;
+        grid-template-columns: 143px 1fr;
         gap: 80px;
         align-items: center;
-        padding: 24px 0;
 
         @include mobile {
-            padding: 16px 0;
             justify-content: space-between;
         }
     }
 
-    &__logo-img {
+    &__logo {
+        display: block;
         width: 143px;
         height: 32px;
 
         @include mobile {
-            min-width: 81px;
+            width: 81px;
         }
     }
 
@@ -25,6 +32,12 @@
         gap: 40px;
         align-items: center;
         width: 100%;
+
+        @include mobile {
+            display: grid;
+            grid-template-columns: repeat(3, 24px);
+            gap: 20px;
+        }
     }
 
     &__nav {
