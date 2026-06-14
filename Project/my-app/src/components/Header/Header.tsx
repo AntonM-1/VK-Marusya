@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/logo-marusya.svg'
 import SearchBar from '../Search/SearchBar'
 import styles from './Header.module.scss'
+import IconGenres from '../../assets/icon-genres.svg'
+import IconUser from '../../assets/icon-user.svg'
 
 const Header = () => {
     return (
@@ -17,7 +19,7 @@ const Header = () => {
                             <NavLink
                                 to='/'
                                 className={({ isActive }) =>
-                                    clsx(styles.header__link, { [styles['header__link--active']]: isActive })
+                                    clsx(styles.header__link, { [styles['header__link--active']]: isActive }, styles['header__link--home-page'])
                                 }
                             >
                                 Главная
@@ -28,12 +30,17 @@ const Header = () => {
                                     clsx(styles.header__link, { [styles['header__link--active']]: isActive })
                                 }
                             >
-                                Жанры
+                                <span className={styles['header__link-text']}>Жанры</span>
+                                <img className={styles['header__link-icon']} src={IconGenres} width='24' height='24' />
                             </NavLink>
                         </nav>
                         <SearchBar />
+                        <Link to='/login' className={styles.header__link}>
+                            <span className={styles['header__link-text']}>Войти</span>
+                            <img className={styles['header__link-icon']} src={IconUser} width='24' height='24' />
+                        </Link>
                     </div>
-                    <Link to='/login' className={styles.header__link}>Войти</Link>
+
                 </div>
             </div>
         </header>

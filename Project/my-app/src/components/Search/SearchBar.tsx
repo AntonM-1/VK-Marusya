@@ -1,12 +1,11 @@
 import styles from "./SearchBar.module.scss"
-import IconSearch from "../../assets/icon-search.svg"
+import IconSearch from "../../assets/icon-search.svg?react"
+
 
 const SearchBar = () => {
     return (
         <div className={styles.search}>
-            <div className={styles.search__icon}>
-                <img src={IconSearch} aria-hidden='true' />
-            </div>
+            <IconSearch className={styles.search__icon} />
             <input
                 type="text"
                 placeholder="Поиск"

@@ -1,4 +1,5 @@
 @use '../global/variables' as *;
+@use '../global/mixins' as *;
 
 .btn {
     padding: 16px 48px;
@@ -9,12 +10,22 @@
     line-height: 24px;
     border: 1px solid $color-black-40;
 
+    @include mobile {
+        padding: 16px 39px;
+    }
+
     &--accent {
         border: none;
+        width: auto;
         background-color: $color-blue-light;
     }
 
     &--small {
-        padding: 16px 22px;
+        width: 68px;
+        height: 56px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

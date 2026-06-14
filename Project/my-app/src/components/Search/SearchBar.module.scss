@@ -3,12 +3,22 @@
     position: relative;
     width: 100%;
 
+    @include mobile {
+        width: auto;
+    }
+
     &__icon {
         position: absolute;
         top: 9px;
         left: 16px;
         width: 24px;
         height: 24px;
+        color: $color-white-50;
+
+        @include mobile {
+            position: static;
+            color: $color-white;
+        }
     }
 
     &__input {
@@ -17,5 +27,12 @@
         border-radius: 8px;
         border: none;
         width: 100%;
+        margin-right: 40px;
+
+        @include mobile {
+            padding: 0;
+            background-color: transparent;
+            display: none;
+        }
     }
 }

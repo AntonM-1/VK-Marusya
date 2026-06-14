@@ -1,10 +1,18 @@
 .footer {
     padding: 40px 0;
 
+    @include mobile {
+        padding: 14px 0 24px;
+    }
+
     &__socials {
         display: flex;
         gap: 24px;
         justify-content: end;
         align-items: center;
+
+        @include mobile {
+            justify-content: start;
+        }
     }
 }

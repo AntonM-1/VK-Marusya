@@ -1,22 +1,42 @@
 .hero-banner {
     padding: 32px 0;
 
+    @include mobile {
+        padding: 0 0 24px;
+    }
+
     &__wrap {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
         justify-items: end;
         gap: 20px;
+
+        @include mobile {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 24px;
+        }
     }
 
     &__left-side {
         display: grid;
         gap: 60px;
+
+        @include mobile {
+            gap: 32px;
+            width: 100%;
+            min-width: 0;
+        }
     }
 
     &__about-film {
         display: grid;
         gap: 16px;
+
+        @include mobile {
+            gap: 12px;
+        }
     }
 
     &__info {
@@ -26,6 +46,11 @@
         font-size: 18px;
         line-height: 24px;
         align-items: center;
+
+        @include mobile {
+            font-size: 14px;
+            line-height: 20px;
+        }
     }
 
     &__rating {
@@ -37,27 +62,62 @@
         padding: 4px 12px;
         justify-content: center;
         align-items: center;
+
+        @include mobile {
+            font-size: 18px;
+            line-height: 24px;
+        }
     }
 
     &__text {
         display: grid;
         gap: 16px;
+
+        @include mobile {
+            gap: 12px;
+        }
     }
 
     &__title {
         font-weight: 700;
         font-size: 48px;
         line-height: 56px;
+
+        @include mobile {
+            font-size: 24px;
+            line-height: 32px;
+        }
     }
 
     &__description {
         font-size: 24px;
         line-height: 32px;
         color: $color-white-70;
+
+        @include mobile {
+            font-size: 18px;
+            line-height: 24px;
+        }
     }
 
     &__actions {
         display: flex;
         gap: 16px;
+
+        @include mobile {
+            display: grid;
+            grid-template-columns: 1fr 68px 68px;
+            gap: 16px;
+
+            & > :first-child {
+                grid-column: 1 / -1;
+            }
+        }
+    }
+
+    &__right-side {
+        @include mobile {
+            width: 100%;
+        }
     }
 }
