@@ -5,9 +5,14 @@ import IconRefresh from "../../assets/icon-refresh.svg"
 import ImgPrev from "../../assets/img-prev.png"
 import IconStar from "../../assets/icon-star.svg"
 import clsx from "clsx"
+import { useRandomMovie } from "../../hooks/useRandomMovie"
+import { formatRuntime } from "../../utils/formatRuntime"
 
 
 const HeroBanner = () => {
+    const { movie } = useRandomMovie()
+    const rating = movie?.tmdbRating ?? 0;
+
     return (
         <section className={styles['hero-banner']}>
             <div className="container">
@@ -15,17 +20,22 @@ const HeroBanner = () => {
                     <div className={styles['hero-banner__left-side']}>
                         <div className={styles['hero-banner__about-film']}>
                             <div className={styles['hero-banner__info']}>
-                                <div className={styles['hero-banner__rating']}>
-                                    <img src={IconStar} width='16' height='16'/>
-                                    <span className={styles['hero-banner__number']}>7,5</span>
+                                <div className={clsx(styles['hero-banner__rating'], {
+                                    [styles['hero-banner__rating--gold']]: rating >= 8,
+                                    [styles['hero-banner__rating--green']]: rating >= 7 && rating < 8,
+                                    [styles['hero-banner__rating--gray']]: rating >= 5 && rating < 7,
+                                    [styles['hero-banner__rating--red']]: rating < 5,
+                                })}>
+                                    <img src={IconStar} width='16' height='16' />
+                                    <span className={styles['hero-banner__number']}>{rating}</span>
                                 </div>
-                                <span className={styles['hero-banner__year']}>1979</span>
-                                <span className={styles['hero-banner__genre']}>детектив</span>
-                                <span className={styles['hero-banner__duration']}>1 ч 7 мин</span>
+                                <span className={styles['hero-banner__year']}>{movie?.releaseYear}</span>
+                                <span className={styles['hero-banner__genre']}>{movie?.genres[0]}</span>
+                                <span className={styles['hero-banner__runtime']}>{formatRuntime(movie?.runtime)}</span>
                             </div>
                             <div className={styles['hero-banner__text']}>
-                                <h2 className={styles['hero-banner__title']}>Шерлок Холмс и доктор Ватсон: Знакомство</h2>
-                                <p className={styles['hero-banner__description']}>Увлекательные приключения самого известного сыщика всех времен</p>
+                                <h2 className={styles['hero-banner__title']}>{movie?.title}</h2>
+                                <p className={styles['hero-banner__description']}>{movie?.plot}</p>
                             </div>
                         </div>
                         <div className={styles['hero-banner__actions']}>
@@ -40,7 +50,7 @@ const HeroBanner = () => {
                         </div>
                     </div>
                     <div className={styles['hero-banner__right-side']}>
-                        <img src={ImgPrev} alt="Изображение" className={styles['hero-banner__img']} />
+                        <img src={movie?.backdropUrl} alt="Изображение" className={styles['hero-banner__img']} />
                     </div>
                 </div>
             </div>
