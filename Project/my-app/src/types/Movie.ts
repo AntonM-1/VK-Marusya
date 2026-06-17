@@ -9,4 +9,10 @@ export interface Movie {
     backdropUrl: string
     posterUrl: string
     trailerUrl: string
+    language: string
+    budget: string
+    revenue: string
+    director: string
+    production: string
+    awardsSummary: string
 }

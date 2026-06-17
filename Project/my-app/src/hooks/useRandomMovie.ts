@@ -5,16 +5,14 @@ import type { Movie } from "../types/Movie"
 export const useRandomMovie = () => {
     const [movie, setMovie] = useState<Movie>()
 
+    const fetchMovie = async () => {
+        const data = await getRandomMovie()
+        setMovie(data)
+    }
+
     useEffect(() => {
-        const loadMovie = async () => {
-            const data = await getRandomMovie()
-            setMovie(data)
-        }
-
-        loadMovie()
-
-        return () => { }
+        fetchMovie()
     }, [])
 
-    return { movie }
+    return { movie, refresh: fetchMovie }
 }

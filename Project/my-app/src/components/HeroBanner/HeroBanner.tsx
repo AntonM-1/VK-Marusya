@@ -1,17 +1,22 @@
-import { Link } from "react-router-dom"
+import { Link, useMatch } from "react-router-dom"
 import styles from "./HeroBanner.module.scss"
 import IconFav from "../../assets/icon-fav.svg"
 import IconRefresh from "../../assets/icon-refresh.svg"
-import ImgPrev from "../../assets/img-prev.png"
 import IconStar from "../../assets/icon-star.svg"
 import clsx from "clsx"
-import { useRandomMovie } from "../../hooks/useRandomMovie"
 import { formatRuntime } from "../../utils/formatRuntime"
+import Button from "../Button/Button"
+import type { Movie } from "../../types/Movie"
 
+type Props = {
+    movie: Movie | null
+    onRefresh?: () => void
+    actionsVariant?: 'grid' | 'row'
+}
 
-const HeroBanner = () => {
-    const { movie } = useRandomMovie()
+const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
     const rating = movie?.tmdbRating ?? 0;
+    const isMoviePage = useMatch('/movie/:id')
 
     return (
         <section className={styles['hero-banner']}>
@@ -27,7 +32,7 @@ const HeroBanner = () => {
                                     [styles['hero-banner__rating--red']]: rating < 5,
                                 })}>
                                     <img src={IconStar} width='16' height='16' />
-                                    <span className={styles['hero-banner__number']}>{rating}</span>
+                                    <span className={styles['hero-banner__number']}>{rating.toFixed(1)}</span>
                                 </div>
                                 <span className={styles['hero-banner__year']}>{movie?.releaseYear}</span>
                                 <span className={styles['hero-banner__genre']}>{movie?.genres[0]}</span>
@@ -38,15 +43,15 @@ const HeroBanner = () => {
                                 <p className={styles['hero-banner__description']}>{movie?.plot}</p>
                             </div>
                         </div>
-                        <div className={styles['hero-banner__actions']}>
-                            <button className={clsx(styles['hero-banner__btn'], 'btn', 'btn--accent')}>Трейлер</button>
-                            <Link to='' className={clsx(styles['hero-banner__btn'], 'btn')}>О фильме</Link>
-                            <button className={clsx(styles['hero-banner__btn'], 'btn', 'btn--small')}>
+                        <div className={clsx(styles['hero-banner__actions'], styles[`hero-banner__actions--${actionsVariant}`])}>
+                            <Button variant="accent" className={styles['hero-banner__btn']}>Трейлер</Button>
+                            {!isMoviePage && <Button as={Link} to={`movie/${movie?.id}`} className={styles['hero-banner__btn']}>О фильме</Button>}
+                            <Button variant="small" className={styles['hero-banner__btn']}>
                                 <img src={IconFav} width='24' height='24' />
-                            </button>
-                            <button className={clsx(styles['hero-banner__btn'], 'btn', 'btn--small')}>
+                            </Button>
+                            {onRefresh && <Button variant="small" onClick={onRefresh} className={styles['hero-banner__btn']}>
                                 <img src={IconRefresh} width='24' height='24' />
-                            </button>
+                            </Button>}
                         </div>
                     </div>
                     <div className={styles['hero-banner__right-side']}>
