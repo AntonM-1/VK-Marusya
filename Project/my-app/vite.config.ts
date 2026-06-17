@@ -5,6 +5,11 @@ import { fileURLToPath, URL } from 'url'
 
 export default defineConfig({
     plugins: [react(), svgr()],
+    server: {
+        headers: {
+            'Content-Security-Policy': "frame-src https://www.youtube.com",
+        },
+    },
     css: {
         preprocessorOptions: {
             scss: {

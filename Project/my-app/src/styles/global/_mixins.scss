@@ -9,6 +9,13 @@ $breakpoint-wide:    1440px;
     }
 }
 
+@mixin mobile-landscape {
+    @media (max-height: 375px) and (orientation: landscape) {
+        @content;
+    }
+}
+
+
 @mixin tablet {
     @media (max-width: #{$breakpoint-tablet}) {
         @content;

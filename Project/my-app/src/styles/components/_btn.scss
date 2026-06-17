@@ -29,4 +29,41 @@
         align-items: center;
         justify-content: center;
     }
+
+    &--modal {
+        padding: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: $color-white;
+        border: none;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: $color-black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%) rotate(45deg);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: $color-black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%) rotate(-45deg);
+        }
+
+        @include mobile {
+            width: 32px;
+            height: 32px;
+        }
+    }
 }

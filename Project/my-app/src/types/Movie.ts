@@ -8,7 +8,7 @@ export interface Movie {
     plot: string
     backdropUrl: string
     posterUrl: string
-    trailerUrl: string
+    trailerYouTubeId: string
     language: string
     budget: string
     revenue: string
