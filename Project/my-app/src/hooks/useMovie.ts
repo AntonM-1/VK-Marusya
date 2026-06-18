@@ -6,7 +6,13 @@ export const useMovie = (id: number) => {
     const [movie, setMovie] = useState<Movie | null>(null)
 
     useEffect(() => {
-        getMovieById(id).then(setMovie)
+        let cancelled = false
+
+        getMovieById(id).then(data => {
+            if (!cancelled) setMovie(data)
+        })
+
+        return () => { cancelled = true }
     }, [id])
 
     return { movie }

@@ -6,14 +6,16 @@ export const useTopMovies = () => {
     const [movies, setMovies] = useState<Movie[]>([])
 
     useEffect(() => {
+        let cancelled = false
+
         const loadMovies = async () => {
             const data = await getTopMovies()
-            setMovies(data)
+            if (!cancelled) setMovies(data)
         }
 
         loadMovies()
 
-        return () => {}
+        return () => { cancelled = true }
     }, [])
 
     return { movies }
