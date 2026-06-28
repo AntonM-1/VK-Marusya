@@ -17,6 +17,12 @@ body {
     min-height: 100%;
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
 body {
     font-family: $font-primary;
     font-size: 16px;

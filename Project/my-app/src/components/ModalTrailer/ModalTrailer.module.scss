@@ -6,6 +6,15 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
+    animation: trailerOverlayIn 0.25s ease forwards;
+
+    &--closing {
+        animation: trailerOverlayOut 0.22s ease forwards;
+
+        .modal-trailer__wrap {
+            animation: trailerWrapOut 0.22s ease forwards;
+        }
+    }
 
     &__wrap {
         position: relative;
@@ -13,6 +22,7 @@
         height: 540px;
         background-color: $color-gray-2;
         border: 1px solid $color-white-50;
+        animation: trailerWrapIn 0.3s ease forwards;
 
         @include mobile {
             width: 375px;
@@ -109,6 +119,7 @@
     &__icon {
         width: 40px;
         height: 40px;
+        color: $color-black;
 
         @include mobile {
             width: 24px;
@@ -116,4 +127,24 @@
         }
     }
 
+}
+
+@keyframes trailerOverlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes trailerOverlayOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes trailerWrapIn {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes trailerWrapOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.94); }
 }

@@ -10,15 +10,27 @@
     line-height: 24px;
     border: 1px solid $color-black-40;
     height: 56px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 
     @include mobile {
         padding: 16px 39px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background-color: $color-gray-7;
     }
 
     &--accent {
         border: none;
         width: auto;
         background-color: $color-blue-light;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $color-slate;
+        }
     }
 
     &--small {

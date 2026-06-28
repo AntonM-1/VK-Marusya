@@ -1,8 +1,8 @@
 import styles from "./Footer.module.scss"
-import IconVk from "../../assets/icon-vk.svg"
-import IconYt from "../../assets/icon-youtube.svg"
-import IconOk from "../../assets/icon-ok.svg"
-import IconTg from "../../assets/icon-telegram.svg"
+import IconVk from "../../assets/icon-vk.svg?react"
+import IconYt from "../../assets/icon-youtube.svg?react"
+import IconOk from "../../assets/icon-ok.svg?react"
+import IconTg from "../../assets/icon-telegram.svg?react"
 
 const Footer = () => {
     return (
@@ -11,22 +11,22 @@ const Footer = () => {
                 <ul className={styles['footer__socials']}>
                     <li className={styles['footer__social']}>
                         <a href="#" className={styles['footer__link']}>
-                            <img src={IconVk} alt="вконтакте" width='36' height='36' />
+                            <IconVk className={styles['footer__icon']} />
                         </a>
                     </li>
                     <li className={styles['footer__social']}>
                         <a href="#" className={styles['footer__link']}>
-                            <img src={IconYt} alt="ютуб" width='36' height='36' />
+                            <IconYt className={styles['footer__icon']} />
                         </a>
                     </li>
                     <li className={styles['footer__social']}>
                         <a href="#" className={styles['footer__link']}>
-                            <img src={IconOk} alt="одноклассники" width='36' height='36' />
+                            <IconOk className={styles['footer__icon']} />
                         </a>
                     </li>
                     <li className={styles['footer__social']}>
                         <a href="#" className={styles['footer__link']}>
-                            <img src={IconTg} alt="телеграмм" width='36' height='36' />
+                            <IconTg className={styles['footer__icon']} />
                         </a>
                     </li>
                 </ul>

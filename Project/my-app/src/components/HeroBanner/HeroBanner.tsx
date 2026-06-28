@@ -1,14 +1,16 @@
 import { Link, useMatch } from "react-router-dom"
 import styles from "./HeroBanner.module.scss"
-import IconFav from "../../assets/icon-fav.svg"
-import IconRefresh from "../../assets/icon-refresh.svg"
-import IconStar from "../../assets/icon-star.svg"
+import IconFav from "../../assets/icon-fav.svg?react"
+import IconRefresh from "../../assets/icon-refresh.svg?react"
+import IconStar from "../../assets/icon-star.svg?react"
 import clsx from "clsx"
 import { formatRuntime } from "../../utils/formatRuntime"
 import Button from "../Button/Button"
 import type { Movie } from "../../types/Movie"
 import { useState } from "react"
 import ModalTrailer from "../ModalTrailer/ModalTrailer"
+import ModalAuth from "../ModalAuth/ModalAuth"
+import { useAuth } from "../../hooks/useAuth"
 
 type Props = {
     movie: Movie | null
@@ -21,6 +23,14 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
     const isMoviePage = useMatch('/movie/:id')
 
     const [isModalTrailerOpen, setIsModalTrailerOpen] = useState(false)
+    const [isAuthOpen, setIsAuthOpen] = useState(false)
+    const { user, toggleFavorite } = useAuth()
+    const isFavorite = movie ? user?.favorites.includes(String(movie.id)) : false
+
+    const handleFavClick = () => {
+        if (!user) { setIsAuthOpen(true); return }
+        if (movie) toggleFavorite(movie.id)
+    }
 
     return (
         <>
@@ -36,7 +46,7 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
                                         [styles['hero-banner__rating--gray']]: rating >= 5 && rating < 7,
                                         [styles['hero-banner__rating--red']]: rating < 5,
                                     })}>
-                                        <img src={IconStar} width='16' height='16' />
+                                        <IconStar className={styles['hero-banner__star-icon']} />
                                         <span className={styles['hero-banner__number']}>{rating.toFixed(1)}</span>
                                     </div>
                                     <span className={styles['hero-banner__year']}>{movie?.releaseYear}</span>
@@ -51,11 +61,19 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
                             <div className={clsx(styles['hero-banner__actions'], styles[`hero-banner__actions--${actionsVariant}`])}>
                                 <Button variant="accent" className={styles['hero-banner__btn']} onClick={() => setIsModalTrailerOpen(true)}>Трейлер</Button>
                                 {!isMoviePage && <Button as={Link} to={`movie/${movie?.id}`} className={styles['hero-banner__btn']}>О фильме</Button>}
-                                <Button variant="small" className={styles['hero-banner__btn']}>
-                                    <img src={IconFav} width='24' height='24' />
+                                <Button
+                                    variant="small"
+                                    className={styles['hero-banner__btn']}
+                                    onClick={handleFavClick}
+                                >
+                                    <IconFav
+                                        width='24'
+                                        height='24'
+                                        className={clsx({ [styles['hero-banner__fav-icon--active']]: isFavorite })}
+                                    />
                                 </Button>
                                 {onRefresh && <Button variant="small" onClick={onRefresh} className={styles['hero-banner__btn']}>
-                                    <img src={IconRefresh} width='24' height='24' />
+                                    <IconRefresh className={styles['hero-banner__refresh-icon']} />
                                 </Button>}
                             </div>
                         </div>
@@ -65,6 +83,7 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
                     </div>
                 </div>
             </section>
+            <ModalAuth isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
             <ModalTrailer isOpen={isModalTrailerOpen}
                 onClose={() => setIsModalTrailerOpen(false)}
                 trailerYouTubeId={movie?.trailerYouTubeId ?? ''}

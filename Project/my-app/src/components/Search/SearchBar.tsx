@@ -1,6 +1,6 @@
 import styles from "./SearchBar.module.scss"
 import IconSearch from "../../assets/icon-search.svg?react"
-import IconStar from "../../assets/icon-star.svg"
+import IconStar from "../../assets/icon-star.svg?react"
 import useMoviesByTitle from "../../hooks/useMoviesByTitle"
 import { Link } from "react-router-dom"
 import { createPortal } from "react-dom"
@@ -79,7 +79,7 @@ const SearchBar = () => {
                                                 [styles['search__dropdown-rating--gray']]: movie.tmdbRating >= 5 && movie.tmdbRating < 7,
                                                 [styles['search__dropdown-rating--red']]: movie.tmdbRating < 5,
                                             })}>
-                                                <img src={IconStar} alt="" className={styles['search__dropdown-icon']} />
+                                                <IconStar className={styles['search__dropdown-icon']} />
                                                 <span>{movie.tmdbRating.toFixed(1)}</span>
                                             </div>
                                             <span>{movie.releaseYear}</span>

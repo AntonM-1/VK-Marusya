@@ -15,6 +15,7 @@ const MoviesByGenrePage = () => {
                 genre={id ?? ''}
                 movies={movies}
                 hasMore={hasMore}
+                isLoading={isLoading}
                 onLoadMore={loadMore}
             />
             <Footer />

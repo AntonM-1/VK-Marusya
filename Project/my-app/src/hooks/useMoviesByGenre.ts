@@ -1,23 +1,32 @@
 import { useEffect, useState } from "react"
 import { getMoviesByGenre } from "../api/movies/getMoviesByGenre"
 import type { Movie } from "../types/Movie"
+import { useNotification } from "../context/NotificationContext"
 
 const useMoviesByGenre = (genre: string) => {
     const [movies, setMovies] = useState<Movie[]>([])
     const [page, setPage] = useState(1)
     const [hasMore, setHasMore] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
+    const { showError } = useNotification()
 
     useEffect(() => {
         let cancelled = false
         setIsLoading(true)
 
         const fetchMovies = async () => {
-            const newMovies = await getMoviesByGenre(genre, 10, page)
-            if (cancelled) return
-            setMovies(prev => [...prev, ...newMovies])
-            if (newMovies.length < 10) setHasMore(false)
-            setIsLoading(false)
+            try {
+                const newMovies = await getMoviesByGenre(genre, 10, page)
+                if (cancelled) return
+                setMovies(prev => [...prev, ...newMovies])
+                if (newMovies.length < 10) setHasMore(false)
+                setIsLoading(false)
+            } catch {
+                if (!cancelled) {
+                    showError('Не удалось загрузить фильмы')
+                    setIsLoading(false)
+                }
+            }
         }
 
         fetchMovies()

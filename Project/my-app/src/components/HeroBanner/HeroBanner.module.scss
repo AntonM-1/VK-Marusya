@@ -163,4 +163,20 @@
         object-fit: cover;
         border-radius: 28px;
     }
+
+    &__star-icon {
+        width: 16px;
+        height: 16px;
+        color: $color-white;
+    }
+
+    &__refresh-icon {
+        width: 24px;
+        height: 24px;
+        color: $color-white;
+    }
+
+    &__fav-icon--active {
+        color: $color-purple-dark;
+    }
 }

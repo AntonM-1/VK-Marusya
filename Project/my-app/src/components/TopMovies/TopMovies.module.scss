@@ -46,6 +46,12 @@
         border-radius: 16px;
         border: 1px solid $color-white-25;
         box-shadow: 0px 0px 80px 0px $color-white-33;
+        transition: transform 0.25s ease;
+
+        &:hover {
+            transform: scale(1.04);
+            z-index: 1;
+        }
 
         @include mobile {
             flex-shrink: 0;
