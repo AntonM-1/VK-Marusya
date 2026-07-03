@@ -12,6 +12,8 @@ export const useMovie = (id: number) => {
         let cancelled = false
         setIsLoading(true)
 
+        if (id === undefined || isNaN(id)) return
+
         getMovieById(id)
             .then(data => {
                 if (!cancelled) {

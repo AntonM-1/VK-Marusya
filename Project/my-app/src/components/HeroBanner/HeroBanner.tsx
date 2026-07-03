@@ -78,7 +78,7 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
                             </div>
                         </div>
                         <div className={styles['hero-banner__right-side']}>
-                            <img src={movie?.backdropUrl} alt="Изображение" className={styles['hero-banner__img']} />
+                            <img src={movie?.backdropUrl || 'http://dummyimage.com/1'} alt="Изображение" className={styles['hero-banner__img']} />
                         </div>
                     </div>
                 </div>

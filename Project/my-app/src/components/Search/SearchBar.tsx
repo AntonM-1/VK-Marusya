@@ -70,7 +70,7 @@ const SearchBar = () => {
                                 onClick={handleSelect}
                             >
                                 <div className={styles['search__dropdown-wrap']}>
-                                    <img src={movie.posterUrl} alt="" className={styles['search__dropdown-img']} />
+                                    <img src={movie?.posterUrl || 'http://dummyimage.com/1'} alt="" className={styles['search__dropdown-img']} />
                                     <div className={styles['search__dropdown-info']}>
                                         <div className={styles['search__dropdown-top']}>
                                             <div className={clsx(styles['search__dropdown-rating'], {

@@ -15,7 +15,7 @@ const TopMovies = () => {
                         {movies.map(movie => (
                             <li className={styles['top-movies__item']} key={movie.id}>
                                 <Link to={`/movie/${movie.id}`} className={styles['top-movies__link']}>
-                                    <img src={movie.posterUrl} alt="Изображение" className={styles['top-movies__img']} />
+                                    <img src={movie?.posterUrl || 'http://dummyimage.com/1'} alt="Изображение" className={styles['top-movies__img']} />
                                 </Link>
                             </li>
                         ))}

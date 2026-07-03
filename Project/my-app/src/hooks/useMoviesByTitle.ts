@@ -11,11 +11,24 @@ const useMoviesByTitle = (title: string) => {
             return
         }
 
-        const timer = setTimeout(() => {
-            getMoviesByTitle(title).then(setResults)
+        const controller = new AbortController()
+        const signal = controller.signal
+
+        const timer = setTimeout(async () => {
+            try {
+                const data = await getMoviesByTitle(title, 5, { signal })
+                setResults(data)
+            } catch (error) {
+                if (error instanceof Error && error.name === 'AbortError') {
+                    return
+                }
+            }
         }, 500)
 
-        return () => clearTimeout(timer)
+        return () => {
+            clearTimeout(timer)
+            controller.abort()
+        }
     }, [title])
 
     return { results }

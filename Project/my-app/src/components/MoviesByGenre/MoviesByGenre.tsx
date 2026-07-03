@@ -49,7 +49,7 @@ const MoviesByGenre = ({ genre, movies, hasMore, isLoading, onLoadMore }: Props)
                             {movies.map(movie => (
                                 <li className={styles['movies-genre__item']} key={movie.id}>
                                     <Link to={`/movie/${movie.id}`} className={styles['movies-genre__card']}>
-                                        <img src={movie.posterUrl} alt={movie.title} className={styles['movies-genre__img']} />
+                                        <img src={movie?.posterUrl || 'http://dummyimage.com/1'} alt={movie.title} className={styles['movies-genre__img']} />
                                     </Link>
                                 </li>
                             ))}
