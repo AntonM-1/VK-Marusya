@@ -1,39 +1,62 @@
-import { useEffect, useState } from "react"
-import { getGenres } from "../api/genres/getGenres"
-import { getMoviesByGenre } from "../api/movies/getMoviesByGenre"
-import { genreNames } from "../utils/genres"
-import type { Genre } from "../types/Genre"
+import { useEffect, useState } from "react";
+import { getGenres } from "../api/genres/getGenres";
+import { getMoviesByGenre } from "../api/movies/getMoviesByGenre";
+import { genreNames } from "../utils/genres";
+import type { Genre } from "../types/Genre";
 
 const useGenres = () => {
-    const [genres, setGenres] = useState<Genre[]>([])
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchGenres = async () => {
-            const rawGenres = await getGenres()
+  useEffect(() => {
+    const fetchGenres = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const rawGenres = await getGenres();
+        const usedImages = new Set<string>();
 
-            const usedImages = new Set<string>()
+        const results = await Promise.allSettled(
+          rawGenres.map(async (id) => {
+            try {
+              const movies = await getMoviesByGenre(id, 10);
+              const unique = movies.find(
+                (m) => m.backdropUrl && !usedImages.has(m.backdropUrl)
+              );
+              if (unique?.backdropUrl) usedImages.add(unique.backdropUrl);
+              return {
+                id,
+                name: genreNames[id] ?? id,
+                image: unique?.backdropUrl ?? `http://dummyimage.com/1000`, 
+              };
+            } catch {
+              return {
+                id,
+                name: genreNames[id] ?? id,
+                image: `http://dummyimage.com/1000`,
+              };
+            }
+          })
+        );
 
-            const enriched = await Promise.all(
-                rawGenres.map(async (id) => {
-                    const movies = await getMoviesByGenre(id, 10)
-                    const unique = movies.find(m => m.backdropUrl && !usedImages.has(m.backdropUrl))
-                    if (unique?.backdropUrl) usedImages.add(unique.backdropUrl)
+        const enriched = results
+          .filter((r) => r.status === "fulfilled")
+          .map((r) => r.value);
 
-                    return {
-                        id,
-                        name: genreNames[id] ?? id,
-                        image: unique?.backdropUrl ?? `https://picsum.photos/seed/${id}/400/600`,
-                    }
-                })
-            )
+        setGenres(enriched);
+      } catch (err) {
+        setError("Не удалось загрузить список жанров");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-            setGenres(enriched)
-        }
+    fetchGenres();
+  }, []);
 
-        fetchGenres()
-    }, [])
+  return { genres, isLoading, error };
+};
 
-    return { genres }
-}
-
-export default useGenres
+export default useGenres;
