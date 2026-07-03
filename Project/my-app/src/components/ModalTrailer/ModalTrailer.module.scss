@@ -1,0 +1,150 @@
+.modal-trailer {
+    position: fixed;
+    inset: 0;
+    background-color: $color-black-70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: trailerOverlayIn 0.25s ease forwards;
+
+    &--closing {
+        animation: trailerOverlayOut 0.22s ease forwards;
+
+        .modal-trailer__wrap {
+            animation: trailerWrapOut 0.22s ease forwards;
+        }
+    }
+
+    &__wrap {
+        position: relative;
+        width: 960px;
+        height: 540px;
+        background-color: $color-gray-2;
+        border: 1px solid $color-white-50;
+        animation: trailerWrapIn 0.3s ease forwards;
+
+        @include mobile {
+            width: 375px;
+            height: 212px;
+        }
+
+        @include mobile-landscape {
+            height: 100%;
+        }
+    }
+
+    &__title {
+        position: absolute;
+        bottom: 24px;
+        left: 20px;
+        padding: 24px 40px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 32px;
+        background-color: $color-dark-bg-50;
+        width: 920px;
+
+        &--hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @include mobile {
+            position: static;
+        }
+
+        @include mobile-landscape {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: 0;
+        right: -72px;
+
+        @include mobile {
+            top: 0;
+            right: 0;
+        }
+
+        @include mobile-landscape {
+            top: 16px;
+            right: 16px;
+        }
+    }
+
+    &__video {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    &__wrap:hover &__play-btn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &__play-btn {
+        position: absolute;
+        bottom: 50%;
+        right: 50%;
+        transform: translate(50%, 50%);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        color: $color-black;
+        background-color: $color-white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 2;
+    }
+
+    &__icon {
+        width: 40px;
+        height: 40px;
+        color: $color-black;
+
+        @include mobile {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+}
+
+@keyframes trailerOverlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes trailerOverlayOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes trailerWrapIn {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes trailerWrapOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.94); }
+}

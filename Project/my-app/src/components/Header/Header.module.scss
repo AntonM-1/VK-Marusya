@@ -1,0 +1,90 @@
+.header {
+    padding: 25px 0;
+
+    @include mobile {
+        padding: 16px 0 8px;
+
+    }
+
+    &__wrap {
+        display: grid;
+        grid-template-columns: 143px 1fr;
+        gap: 80px;
+        align-items: center;
+
+        @include mobile {
+            justify-content: space-between;
+        }
+    }
+
+    &__logo {
+        display: block;
+        width: 143px;
+        height: 32px;
+
+        @include mobile {
+            width: 81px;
+        }
+    }
+
+    &__center {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        width: 100%;
+
+        @include mobile {
+            display: grid;
+            grid-template-columns: repeat(3, 24px);
+            gap: 20px;
+        }
+    }
+
+    &__nav {
+        display: flex;
+        gap: 40px;
+    }
+
+    &__link {
+        font-size: 24px;
+        line-height: 32px;
+        position: relative;
+
+        &--active {
+            &::before {
+                content: "";
+                width: 100%;
+                height: 2px;
+                background-color: $color-purple-light;
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+            }
+        }
+
+        &--home-page {
+            @include mobile {
+                display: none;
+            }
+        }
+
+        &-text {
+            @include mobile {
+                display: none;
+            }
+        }
+
+        &-icon {
+            display: none;
+            color: $color-white;
+
+            @include mobile {
+                display: block;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+
+
+}

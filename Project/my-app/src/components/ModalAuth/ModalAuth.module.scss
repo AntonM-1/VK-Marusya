@@ -1,0 +1,202 @@
+.modal-auth {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background-color: $color-black-70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: overlayIn 0.25s ease forwards;
+
+    &--closing {
+        animation: overlayOut 0.22s ease forwards;
+
+        .modal-auth__card {
+            animation: cardOut 0.22s ease forwards;
+        }
+    }
+
+    &__card {
+        background-color: $color-white;
+        border-radius: 24px;
+        padding: 64px 40px;
+        width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        animation: cardIn 0.3s ease forwards;
+
+        @include mobile {
+            padding: 32px 20px;
+            width: 335px;
+        }
+    }
+
+    &__logo {
+        width: 132px;
+        height: 30px;
+        margin-bottom: 40px;
+
+        @include mobile {
+            margin-bottom: 32px;
+        }
+    }
+
+    &__form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__input {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon {
+        position: absolute;
+        left: 16px;
+        width: 24px;
+        height: 24px;
+        pointer-events: none;
+        color: $color-black-40;
+        transition: color 0.2s ease;
+    }
+
+    &__field {
+        width: 100%;
+        padding: 16px 16px 16px 52px;
+        background-color: $color-white;
+        border: 1px solid $color-black-40;
+        border-radius: 8px;
+        font-size: 18px;
+        line-height: 24px;
+        color: $color-black;
+        outline: none;
+        transition: border-color 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $color-purple;
+        }
+    }
+
+    &__input:has(input:hover) &__icon,
+    &__input:has(input:focus-visible) &__icon {
+        color: $color-purple;
+    }
+
+    &__input--error &__field {
+        border-color: $color-red-bright;
+    }
+
+    &__input--error &__icon {
+        color: $color-red-bright;
+    }
+
+    &__btn {
+        width: 100%;
+        padding: 16px;
+        background-color: $color-blue-light;
+        border-radius: 28px;
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 600;
+        color: $color-white;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $color-slate;
+        }
+    }
+
+    &__tab {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 24px;
+        color: $color-black;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            opacity: 0.7;
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: 0;
+        right: -72px;
+    }
+
+    &__title {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 700;
+        color: $color-black;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    &__success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
+        width: 100%;
+    }
+
+    &__success-title {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 700;
+        color: $color-black;
+    }
+
+    &__success-subtitle {
+        font-size: 18px;
+        line-height: 24px;
+        color: $color-gray-5;
+        margin-bottom: 12px;
+    }
+
+    &__error {
+        font-size: 14px;
+        color: $color-red;
+        text-align: center;
+    }
+}
+
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes overlayOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes cardOut {
+    from { opacity: 1; transform: scale(1) translateY(0); }
+    to { opacity: 0; transform: scale(0.92) translateY(8px); }
+}

@@ -1,0 +1,182 @@
+.hero-banner {
+    padding: 30px 0;
+
+    @include mobile {
+        padding: 0 0 24px;
+    }
+
+    &__wrap {
+        display: grid;
+        grid-template-columns: 1fr 680px;
+        gap: 20px;
+
+        @include mobile {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 24px;
+        }
+    }
+
+    &__left-side {
+        display: grid;
+        gap: 43px;
+        padding: 55px 0;
+
+        @include mobile {
+            gap: 32px;
+            width: 100%;
+            min-width: 0;
+            padding: 0;
+        }
+    }
+
+    &__about-film {
+        display: grid;
+
+        @include mobile {
+            gap: 12px;
+        }
+    }
+
+    &__info {
+        display: flex;
+        gap: 16px;
+        color: $color-white-70;
+        font-size: 18px;
+        line-height: 24px;
+        align-items: center;
+
+        @include mobile {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+
+    &__rating {
+        display: flex;
+        gap: 4px;
+        color: $color-white;
+        border-radius: 16px;
+        padding: 4px 12px;
+        justify-content: center;
+        align-items: center;
+
+        @include mobile {
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        &--gold {
+            background-color: $color-yellow;
+        }
+
+        &--green {
+            background-color: $color-green;
+
+        }
+
+        &--gray {
+            background-color: $color-gray-6;
+        }
+
+        &--red {
+            background-color: $color-red;
+        }
+    }
+
+    &__text {
+        display: grid;
+
+        @include mobile {
+            gap: 12px;
+        }
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 56px;
+        min-height: 112px;
+
+        @include mobile {
+            font-size: 24px;
+            line-height: 32px;
+        }
+    }
+
+    &__description {
+        font-size: 24px;
+        line-height: 32px;
+        color: $color-white-70;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-height: 64px;
+
+        @include mobile {
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+
+        @include mobile {
+            display: grid;
+            grid-template-columns: 1fr 68px 68px;
+            gap: 16px;
+
+            &> :first-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        &--row {
+            @include mobile {
+                display: flex;
+
+                & > :first-child {
+                    grid-column: unset;
+                    width: 251px;
+                }
+            }
+        }
+    }
+
+    &__right-side {
+        width: 680px;
+        height: 552px;
+        flex-shrink: 0;
+
+        @include mobile {
+            width: 100%;
+            height: 234px;
+        }
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 28px;
+    }
+
+    &__star-icon {
+        width: 16px;
+        height: 16px;
+        color: $color-white;
+    }
+
+    &__refresh-icon {
+        width: 24px;
+        height: 24px;
+        color: $color-white;
+    }
+
+    &__fav-icon--active {
+        color: $color-purple-dark;
+    }
+}
