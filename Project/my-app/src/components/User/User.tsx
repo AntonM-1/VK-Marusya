@@ -9,12 +9,18 @@ import clsx from "clsx"
 import useFavorites from "../../hooks/useFavorites"
 import Button from "../Button/Button"
 import Loader from "../Loader/Loader"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { selectFavoriteIds, toggleFavorite } from "../../store/favoritesSlice"
+import { useNotification } from "../../context/NotificationContext"
 
 const User = () => {
     const [tabs, setTabs] = useState<'favorites' | 'settings'>('favorites')
-    const { user, logout, toggleFavorite } = useAuth()
+    const { user, logout } = useAuth()
     const navigate = useNavigate()
-    const { favorites, isLoading } = useFavorites(user?.favorites ?? [])
+    const dispatch = useAppDispatch()
+    const favoriteIds = useAppSelector(selectFavoriteIds)
+    const { favorites, isLoading } = useFavorites(favoriteIds)
+    const { showError } = useNotification()
 
     return (
         <div className={styles['user']}>
@@ -58,7 +64,7 @@ const User = () => {
                                         </Link>
                                         <button
                                             className={styles['user__movies-remove']}
-                                            onClick={() => toggleFavorite(movie.id)}
+                                            onClick={() => dispatch(toggleFavorite(movie.id)).unwrap().catch(() => showError('Не удалось обновить избранное'))}
                                         >✕</button>
                                     </li>
                                 ))}

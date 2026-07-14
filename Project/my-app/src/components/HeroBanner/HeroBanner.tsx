@@ -11,6 +11,9 @@ import { useState } from "react"
 import ModalTrailer from "../ModalTrailer/ModalTrailer"
 import ModalAuth from "../ModalAuth/ModalAuth"
 import { useAuth } from "../../hooks/useAuth"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { selectFavoriteIds, toggleFavorite } from "../../store/favoritesSlice"
+import { useNotification } from "../../context/NotificationContext"
 
 type Props = {
     movie: Movie | null
@@ -24,12 +27,16 @@ const HeroBanner = ({ movie, onRefresh, actionsVariant = 'grid' }: Props) => {
 
     const [isModalTrailerOpen, setIsModalTrailerOpen] = useState(false)
     const [isAuthOpen, setIsAuthOpen] = useState(false)
-    const { user, toggleFavorite } = useAuth()
-    const isFavorite = movie ? user?.favorites.includes(String(movie.id)) : false
+    const { user } = useAuth()
+    const dispatch = useAppDispatch()
+    const favoriteIds = useAppSelector(selectFavoriteIds)
+    const { showError } = useNotification()
+    const isFavorite = movie ? favoriteIds.includes(String(movie.id)) : false
 
     const handleFavClick = () => {
         if (!user) { setIsAuthOpen(true); return }
-        if (movie) toggleFavorite(movie.id)
+        if (!movie) return
+        dispatch(toggleFavorite(movie.id)).unwrap().catch(() => showError('Не удалось обновить избранное'))
     }
 
     return (

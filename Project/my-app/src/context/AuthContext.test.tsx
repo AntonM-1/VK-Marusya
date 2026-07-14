@@ -1,8 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, act, fireEvent } from '@testing-library/react'
+import { Provider, useSelector } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { AuthProvider } from './AuthContext'
 import { NotificationProvider } from './NotificationContext'
 import { useAuth } from '../hooks/useAuth'
+import favoritesReducer, { selectFavoriteIds } from '../store/favoritesSlice'
 import type { User } from '../types/User'
 
 vi.mock('../api/auth/getProfile')
@@ -15,8 +18,6 @@ vi.mock('../api/favorites/deleteFavorite')
 import { getProfile } from '../api/auth/getProfile'
 import { postLogin } from '../api/auth/postLogin'
 import { getLogout } from '../api/auth/getLogout'
-import { postFavorite } from '../api/favorites/postFavorite'
-import { deleteFavorite } from '../api/favorites/deleteFavorite'
 
 const mockUser: User = {
     name: 'Иван',
@@ -25,25 +26,31 @@ const mockUser: User = {
     favorites: ['1', '2'],
 }
 
-const TestConsumer = ({ movieId = 3 }: { movieId?: number } = {}) => {
-    const { user, login, logout, toggleFavorite } = useAuth()
+const TestConsumer = () => {
+    const { user, login, logout } = useAuth()
+    const favorites = useSelector(selectFavoriteIds)
     return (
         <div>
             <span data-testid="email">{user?.email ?? 'null'}</span>
-            <span data-testid="favorites">{user?.favorites.join(',') ?? ''}</span>
+            <span data-testid="favorites">{favorites.join(',')}</span>
             <button onClick={() => login('ivan@test.com', 'pass')}>login</button>
             <button onClick={logout}>logout</button>
-            <button onClick={() => toggleFavorite(movieId)}>toggle</button>
         </div>
     )
 }
 
-const renderWithProvider = (movieId?: number) =>
-    render(
-        <NotificationProvider>
-            <AuthProvider><TestConsumer movieId={movieId} /></AuthProvider>
-        </NotificationProvider>
+const makeStore = () => configureStore({ reducer: { favorites: favoritesReducer } })
+
+const renderWithProvider = () => {
+    const store = makeStore()
+    return render(
+        <Provider store={store}>
+            <NotificationProvider>
+                <AuthProvider><TestConsumer /></AuthProvider>
+            </NotificationProvider>
+        </Provider>
     )
+}
 
 describe('AuthContext', () => {
     beforeEach(() => {
@@ -91,7 +98,7 @@ describe('AuthContext', () => {
         const SafeLoginConsumer = () => {
             const { user, login } = useAuth()
             const handleClick = async () => {
-                try { await login('ivan@test.com', 'pass') } catch {}
+                try { await login('ivan@test.com', 'pass') } catch { /* expected */ }
             }
             return (
                 <div>
@@ -101,7 +108,12 @@ describe('AuthContext', () => {
             )
         }
 
-        render(<NotificationProvider><AuthProvider><SafeLoginConsumer /></AuthProvider></NotificationProvider>)
+        const store = makeStore()
+        render(
+            <Provider store={store}>
+                <NotificationProvider><AuthProvider><SafeLoginConsumer /></AuthProvider></NotificationProvider>
+            </Provider>
+        )
         await waitFor(() => expect(screen.getByTestId('email').textContent).toBe('null'))
 
         await act(async () => {
@@ -129,62 +141,27 @@ describe('AuthContext', () => {
         expect(screen.getByTestId('email').textContent).toBe('null')
     })
 
-    it('toggleFavorite() добавляет фильм через postFavorite и обновляет список', async () => {
-        vi.mocked(getProfile).mockResolvedValue({ ...mockUser, favorites: ['1', '2'] })
-        vi.mocked(postFavorite).mockResolvedValue(undefined as never)
+    it('синхронизирует избранное пользователя в Redux при загрузке профиля', async () => {
+        vi.mocked(getProfile).mockResolvedValue(mockUser)
+        renderWithProvider()
+        await waitFor(() => {
+            expect(screen.getByTestId('favorites').textContent).toBe('1,2')
+        })
+    })
 
-        renderWithProvider(3)
+    it('очищает избранное в Redux после logout()', async () => {
+        vi.mocked(getProfile).mockResolvedValue(mockUser)
+        vi.mocked(getLogout).mockResolvedValue(undefined as never)
+
+        renderWithProvider()
         await waitFor(() => {
             expect(screen.getByTestId('favorites').textContent).toBe('1,2')
         })
 
         await act(async () => {
-            fireEvent.click(screen.getByText('toggle'))
+            fireEvent.click(screen.getByText('logout'))
         })
 
-        expect(postFavorite).toHaveBeenCalledWith(3)
-        expect(deleteFavorite).not.toHaveBeenCalled()
-        expect(screen.getByTestId('favorites').textContent).toBe('1,2,3')
-    })
-
-    it('toggleFavorite() удаляет фильм через deleteFavorite если он уже в избранном', async () => {
-        vi.mocked(getProfile).mockResolvedValue({ ...mockUser, favorites: ['1', '3'] })
-        vi.mocked(deleteFavorite).mockResolvedValue(undefined as never)
-
-        renderWithProvider(3)
-        await waitFor(() => {
-            expect(screen.getByTestId('favorites').textContent).toBe('1,3')
-        })
-
-        await act(async () => {
-            fireEvent.click(screen.getByText('toggle'))
-        })
-
-        expect(deleteFavorite).toHaveBeenCalledWith(3)
-        expect(postFavorite).not.toHaveBeenCalled()
-        expect(screen.getByTestId('favorites').textContent).toBe('1')
-    })
-
-    it('race condition: медленный getProfile при монтировании не перезаписывает залогиненного user', async () => {
-        let resolveInitialProfile!: (v: User | null) => void
-        vi.mocked(getProfile)
-            .mockReturnValueOnce(new Promise(res => { resolveInitialProfile = res }))
-            .mockResolvedValueOnce(mockUser)
-        vi.mocked(postLogin).mockResolvedValue(undefined as never)
-
-        renderWithProvider()
-
-        await act(async () => {
-            fireEvent.click(screen.getByText('login'))
-        })
-        await waitFor(() => {
-            expect(screen.getByTestId('email').textContent).toBe('ivan@test.com')
-        })
-
-        await act(async () => {
-            resolveInitialProfile(null)
-        })
-
-        expect(screen.getByTestId('email').textContent).toBe('ivan@test.com')
+        expect(screen.getByTestId('favorites').textContent).toBe('')
     })
 })

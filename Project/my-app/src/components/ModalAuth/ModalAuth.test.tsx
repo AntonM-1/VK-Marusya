@@ -35,7 +35,6 @@ describe('ModalAuth', () => {
             login: mockLogin,
             register: mockRegister,
             logout: vi.fn(),
-            toggleFavorite: vi.fn(),
         })
     })
 
