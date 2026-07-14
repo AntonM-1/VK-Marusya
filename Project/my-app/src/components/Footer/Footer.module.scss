@@ -1,0 +1,41 @@
+.footer {
+    margin-top: auto;
+    padding: 40px 0;
+
+    @include mobile {
+        padding: 0 0 24px;
+    }
+
+    &__socials {
+        display: flex;
+        gap: 24px;
+        justify-content: end;
+        align-items: center;
+
+        @include mobile {
+            justify-content: start;
+        }
+    }
+
+    &__link {
+        display: block;
+        width: 36px;
+        height: 36px;
+
+        @include mobile {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__icon {
+        width: 36px;
+        height: 36px;
+        color: $color-white;
+
+        @include mobile {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}

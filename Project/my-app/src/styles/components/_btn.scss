@@ -1,0 +1,81 @@
+@use '../global/variables' as *;
+@use '../global/mixins' as *;
+
+.btn {
+    padding: 16px 48px;
+    background-color: $color-gray-2;
+    border-radius: 28px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    border: 1px solid $color-black-40;
+    height: 56px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    @include mobile {
+        padding: 16px 39px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background-color: $color-gray-7;
+    }
+
+    &--accent {
+        border: none;
+        width: auto;
+        background-color: $color-blue-light;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $color-slate;
+        }
+    }
+
+    &--small {
+        width: 68px;
+        height: 56px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &--modal {
+        padding: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: $color-white;
+        border: none;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: $color-black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%) rotate(45deg);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: $color-black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%) rotate(-45deg);
+        }
+
+        @include mobile {
+            width: 32px;
+            height: 32px;
+        }
+    }
+}

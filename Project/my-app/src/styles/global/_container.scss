@@ -1,0 +1,13 @@
+@use 'mixins' as *;
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 80px;
+    margin: 0 auto;
+
+    @include mobile {
+        max-width: 375px;
+        padding: 0 20px;
+    }
+}
